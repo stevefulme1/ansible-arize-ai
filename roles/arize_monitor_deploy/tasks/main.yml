@@ -1,0 +1,9 @@
+---
+- name: Validate required parameters
+  ansible.builtin.assert:
+    that: arize_monitor_deploy_model_id is defined
+    quiet: true
+
+- name: Execute arize_monitor_deploy
+  ansible.builtin.debug:
+    msg: "Deploy monitoring configuration for Arize AI models"

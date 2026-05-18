@@ -1,0 +1,28 @@
+---
+namespace: stevefulme1
+name: arize_ai
+version: 1.0.0
+readme: README.md
+authors:
+  - Steve Fulmer <sfulmer@redhat.com>
+description: >-
+  Ansible Collection for Arize AI model observability platform.
+  Provides modules for managing models, monitors, dashboards,
+  embeddings, custom metrics, and alert rules via the Arize REST API.
+license:
+  - GPL-3.0-or-later
+tags:
+  - arize
+  - ai
+  - mlops
+  - monitoring
+  - observability
+dependencies: {}
+repository: https://github.com/stevefulme1/ansible-arize-ai
+documentation: https://github.com/stevefulme1/ansible-arize-ai/blob/main/README.md
+homepage: https://github.com/stevefulme1/ansible-arize-ai
+issues: https://github.com/stevefulme1/ansible-arize-ai/issues
+build_ignore:
+  - .git
+  - .github
+  - tests/output
