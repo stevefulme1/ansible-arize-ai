@@ -1,11 +1,11 @@
 ---
 namespace: stevefulme1
 name: arize_ai
-version: 1.0.1
+version: 0.0.1
 readme: README.md
 authors:
   - Steve Fulmer <sfulmer@redhat.com>
-description: >-
+description: "EXPERIMENTAL - proof of concept, not production ready. >-"
   Ansible Collection for Arize AI model observability platform.
   Provides modules for managing models, monitors, dashboards,
   embeddings, custom metrics, and alert rules via the Arize REST API.
