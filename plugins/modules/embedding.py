@@ -96,7 +96,7 @@ def get_resource(module, api_url, headers):
     if not resource_id:
         return None
     try:
-        url = f"{api_url}/api/v1/embedding/{resource_id}"
+        url = f"{api_url}/v2/embeddings/{resource_id}"
         response = requests.get(
             url, headers=headers,
             verify=module.params["validate_certs"],
@@ -118,7 +118,7 @@ def create_resource(module, api_url, headers):
     if module.params.get("model_id"):
         payload["model_id"] = module.params["model_id"]
     response = requests.post(
-        f"{api_url}/api/v1/embedding",
+        f"{api_url}/v2/embeddings",
         headers=headers, json=payload,
         verify=module.params["validate_certs"],
         timeout=30,
@@ -136,7 +136,7 @@ def update_resource(module, api_url, headers, existing):
     if module.params.get("model_id"):
         payload["model_id"] = module.params["model_id"]
     response = requests.put(
-        f"{api_url}/api/v1/embedding/{resource_id}",
+        f"{api_url}/v2/embeddings/{resource_id}",
         headers=headers, json=payload,
         verify=module.params["validate_certs"],
         timeout=30,
@@ -149,7 +149,7 @@ def delete_resource(module, api_url, headers, existing):
     """Delete an existing resource."""
     resource_id = existing.get("id", "")
     response = requests.delete(
-        f"{api_url}/api/v1/embedding/{resource_id}",
+        f"{api_url}/v2/embeddings/{resource_id}",
         headers=headers,
         verify=module.params["validate_certs"],
         timeout=30,

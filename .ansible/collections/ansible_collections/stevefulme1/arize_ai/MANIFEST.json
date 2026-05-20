@@ -1,0 +1,36 @@
+{
+ "collection_info": {
+  "namespace": "stevefulme1",
+  "name": "arize_ai",
+  "version": "0.0.1",
+  "authors": [
+   "Steve Fulmer <sfulmer@redhat.com>"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "arize",
+   "ai",
+   "mlops",
+   "monitoring",
+   "observability"
+  ],
+  "description": "EXPERIMENTAL - proof of concept, not production ready. Ansible Collection for Arize AI model observability platform. Provides modules for managing models, monitors, dashboards, embeddings, custom metrics, and alert rules via the Arize REST API.",
+  "license": [
+   "GPL-3.0-or-later"
+  ],
+  "license_file": null,
+  "dependencies": {},
+  "repository": "https://github.com/stevefulme1/ansible-arize-ai",
+  "documentation": "https://github.com/stevefulme1/ansible-arize-ai/blob/main/README.md",
+  "homepage": "https://github.com/stevefulme1/ansible-arize-ai",
+  "issues": "https://github.com/stevefulme1/ansible-arize-ai/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "a70fca8f733850ff48f2c9a360b85e2cbe63b4a6d0039531d206565c9147c7fd",
+  "format": 1
+ },
+ "format": 1
+}

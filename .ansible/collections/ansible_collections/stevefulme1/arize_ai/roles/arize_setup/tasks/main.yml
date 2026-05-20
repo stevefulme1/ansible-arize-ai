@@ -1,0 +1,9 @@
+---
+- name: Validate required parameters
+  ansible.builtin.assert:
+    that: arize_setup_api_key is defined
+    quiet: true
+
+- name: Execute arize_setup
+  ansible.builtin.debug:
+    msg: "Install and configure Arize AI integration"

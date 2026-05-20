@@ -2,7 +2,7 @@
 # Copyright (c) 2024, Steve Fulmer
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""Ansible module for managing Arize AI custom metric."""
+"""Ansible module for managing Arize AI embedding."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -10,10 +10,10 @@ __metaclass__ = type
 
 DOCUMENTATION = r"""
 ---
-module: custom_metric
-short_description: Manage custom metrics in Arize AI
+module: embedding
+short_description: Manage embedding configurations in Arize AI
 description:
-    - Manage custom metrics in Arize AI via the Arize AI REST API.
+    - Manage embedding configurations in Arize AI via the Arize AI REST API.
 version_added: "1.0.0"
 author:
     - Steve Fulmer (@stevefulme1)
@@ -28,14 +28,9 @@ options:
             - The model id parameter.
         type: str
         required: true
-    expression:
+    embedding_id:
         description:
-            - The expression parameter.
-        type: str
-        required: true
-    metric_id:
-        description:
-            - The metric id parameter.
+            - The embedding id parameter.
         type: str
         required: false
     state:
@@ -67,22 +62,21 @@ requirements:
 """
 
 EXAMPLES = r"""
-- name: Create custom metric
-  stevefulme1.arize_ai.custom_metric:
+- name: Create embedding
+  stevefulme1.arize_ai.embedding:
     name: "example-value"
     model_id: "example-value"
-    expression: "example-value"
     state: present
 
-- name: Delete custom metric
-  stevefulme1.arize_ai.custom_metric:
-    metric_id: "example-value"
+- name: Delete embedding
+  stevefulme1.arize_ai.embedding:
+    embedding_id: "example-value"
     state: absent
 """
 
 RETURN = r"""
-custom_metric:
-    description: Details of the custom metric.
+embedding:
+    description: Details of the embedding.
     returned: On success.
     type: dict
 """
@@ -98,11 +92,11 @@ from ansible.module_utils.basic import AnsibleModule
 
 def get_resource(module, api_url, headers):
     """Retrieve existing resource."""
-    resource_id = module.params.get("metric_id")
+    resource_id = module.params.get("embedding_id")
     if not resource_id:
         return None
     try:
-        url = f"{api_url}/v2/custom-metrics/{resource_id}"
+        url = f"{api_url}/api/v1/embedding/{resource_id}"
         response = requests.get(
             url, headers=headers,
             verify=module.params["validate_certs"],
@@ -123,10 +117,8 @@ def create_resource(module, api_url, headers):
         payload["name"] = module.params["name"]
     if module.params.get("model_id"):
         payload["model_id"] = module.params["model_id"]
-    if module.params.get("expression"):
-        payload["expression"] = module.params["expression"]
     response = requests.post(
-        f"{api_url}/v2/custom-metrics",
+        f"{api_url}/api/v1/embedding",
         headers=headers, json=payload,
         verify=module.params["validate_certs"],
         timeout=30,
@@ -143,10 +135,8 @@ def update_resource(module, api_url, headers, existing):
         payload["name"] = module.params["name"]
     if module.params.get("model_id"):
         payload["model_id"] = module.params["model_id"]
-    if module.params.get("expression"):
-        payload["expression"] = module.params["expression"]
     response = requests.put(
-        f"{api_url}/v2/custom-metrics/{resource_id}",
+        f"{api_url}/api/v1/embedding/{resource_id}",
         headers=headers, json=payload,
         verify=module.params["validate_certs"],
         timeout=30,
@@ -159,7 +149,7 @@ def delete_resource(module, api_url, headers, existing):
     """Delete an existing resource."""
     resource_id = existing.get("id", "")
     response = requests.delete(
-        f"{api_url}/v2/custom-metrics/{resource_id}",
+        f"{api_url}/api/v1/embedding/{resource_id}",
         headers=headers,
         verify=module.params["validate_certs"],
         timeout=30,
@@ -169,7 +159,7 @@ def delete_resource(module, api_url, headers, existing):
 
 def needs_update(params, existing):
     """Check if resource needs updating."""
-    updatable = ['name', 'model_id', 'expression']
+    updatable = ['name', 'model_id']
     for attr in updatable:
         desired = params.get(attr)
         if desired is None:
@@ -184,8 +174,7 @@ def main():
     module_args = dict(
         name=dict(type="str", required=True),
         model_id=dict(type="str", required=True),
-        expression=dict(type="str", required=True),
-        metric_id=dict(type="str"),
+        embedding_id=dict(type="str"),
         state=dict(type="str", choices=["present", "absent"], default="present"),
         api_url=dict(type="str", required=True),
         api_key=dict(type="str", required=True, no_log=True),
@@ -227,7 +216,7 @@ def main():
             resource = create_resource(module, api_url, headers)
         except requests.RequestException as e:
             module.fail_json(msg=f"Failed to create resource: {e}")
-        module.exit_json(changed=True, custom_metric=resource)
+        module.exit_json(changed=True, embedding=resource)
 
     if needs_update(module.params, existing):
         if module.check_mode:
@@ -236,9 +225,9 @@ def main():
             resource = update_resource(module, api_url, headers, existing)
         except requests.RequestException as e:
             module.fail_json(msg=f"Failed to update resource: {e}")
-        module.exit_json(changed=True, custom_metric=resource)
+        module.exit_json(changed=True, embedding=resource)
 
-    module.exit_json(changed=False, custom_metric=existing)
+    module.exit_json(changed=False, embedding=existing)
 
 
 if __name__ == "__main__":
