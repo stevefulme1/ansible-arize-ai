@@ -1,3 +1,7 @@
+> **EXPERIMENTAL** - This collection is a proof of concept and is not production ready.
+> Modules may use placeholder API endpoints and have not been validated against real infrastructure.
+> Do not use in production environments.
+
 # Arize AI Ansible Collection
 
 Ansible Collection for Arize AI model observability platform. Provides modules for managing models, monitors, dashboards, embeddings, custom metrics, and alert rules via the Arize REST API.
